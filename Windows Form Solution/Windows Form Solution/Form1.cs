@@ -61,6 +61,7 @@ namespace Windows_Form_Solution
         {
             imgListView.Clear();
             images.Images.Clear();
+            listImg.Clear();
 
             // Perform Regex to get our bolded words
             var match = Regex.Matches(BodyText.Rtf, @"\\b(.+?)\\b0");
@@ -82,7 +83,13 @@ namespace Windows_Form_Solution
 
         private void generate_Click(object sender, EventArgs e)
         {
-            GeneratePPT();
+            try
+            {
+                GeneratePPT();
+            } catch (IOException)
+            {
+                DialogResult res = MessageBox.Show("Error generating powerpoint. Make sure you do not have Result.pptx currently open!");
+            }
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
@@ -121,9 +128,8 @@ namespace Windows_Form_Solution
                     wc.Headers.Add("user-agent", "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0; Trident/4.0)");
                     string result = wc.DownloadString(String.Format(imgSearchURL, new object[] { key }));
 
-                    Console.WriteLine("Result: " + result);
 
-                    // Check to see if we have picture links
+                    // Check to see if we have picture's links
                     if (result.Contains("https://encrypted-tbn0.gstatic.com/"))
                     {
                         HtmlAgilityPack.HtmlDocument doc = new HtmlAgilityPack.HtmlDocument();
@@ -192,16 +198,19 @@ namespace Windows_Form_Solution
 
             Console.WriteLine(imgListView.SelectedItems.Count);
 
-            for (int i = 0, x = 170, y = 0; i < imgListView.CheckedItems.Count; i++)
+            // Grab checked images
+
+            int x = 170, y = 0, indx = 0;
+            foreach (int i in imgListView.CheckedIndices)
             {
-                var selectIndx = imgListView.CheckedIndices[i];
-                slide.Shapes.AddPicture(ToStream(listImg[selectIndx]), x, y, 140, 140);
+                slide.Shapes.AddPicture(ToStream(listImg[i+1]), x, y, 140, 140);
                 x += 140;
-                if (i % 5 == 0)
+                if (indx % 5 == 0)
                 {
                     y += 140;
                     x = 170;
                 }
+                indx++;
             }
 
             //Save the PowerPoint presentation
