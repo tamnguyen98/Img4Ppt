@@ -23,16 +23,17 @@ namespace Windows_Form_Solution
     public partial class Form1 : Form
     {
         bool boldOn = false;
+        bool onMaximize = false;
+        int listviewOriginalHeight;
+        int listViewOriginalTop;
+
         ImageList images = new ImageList();
         List<Image> listImg {get; set;}
         public Form1()
         {
             InitializeComponent();
-        }
-
-        private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
-        {
-
+            listviewOriginalHeight = imgListView.Height;
+            listViewOriginalTop = imgListView.Top;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -40,6 +41,9 @@ namespace Windows_Form_Solution
             listImg = new List<Image>();
             images.ImageSize = new System.Drawing.Size(86, 86);
 
+            title.Left = (this.Width - title.Width) / 2;
+            body.Left = (this.Width - body.Width) / 2;
+            generate.Left = (this.Width - generate.Width) / 2;
 
             imgListView.LargeImageList = images;
         }
@@ -89,6 +93,39 @@ namespace Windows_Form_Solution
             } catch (IOException)
             {
                 DialogResult res = MessageBox.Show("Error generating powerpoint. Make sure you do not have Result.pptx currently open!");
+            }
+        }
+
+        private void imgListView_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            checkedSelectedImg(true);
+        }
+
+        // double click on an image
+        private void imgListView_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            checkedSelectedImg(false);
+        }
+
+        private void Form1_Resize(object sender, EventArgs e)
+        {
+            title.Left = (this.Width - title.Width) / 2;
+            body.Left = (this.Width - body.Width) / 2;
+            generate.Left = (this.Width - generate.Width) / 2;
+
+            onMaximize = WindowState == FormWindowState.Maximized;
+
+            if (onMaximize)
+            {
+                imgListView.Height -= 140;
+                imgListView.Top += 100;
+                searchImgButton.Top += 100;
+            }
+            else
+            {
+                imgListView.Height = 121;
+                imgListView.Top = 277;
+                searchImgButton.Top = 248;
             }
         }
 
@@ -151,8 +188,8 @@ namespace Windows_Form_Solution
 
                         foreach (var i in imgList)
                         { 
-                            // if there are more than 3 key words, then limit 4 pictures per word
-                            if (keys.Count > 3 && imgCount > 4)
+                            // if not maximized there are more than 3 key words, then limit 4 pictures per word
+                            if (!onMaximize && keys.Count > 3 && imgCount > 4)
                                 break;
                             string src = i.Attributes["src"].Value;
                             if (!imgSource.Contains(src))
@@ -228,6 +265,19 @@ namespace Windows_Form_Solution
             image.Save(stream, ImageFormat.Jpeg);
             stream.Position = 0;
             return stream;
+        }
+
+        private void checkedSelectedImg(bool b)
+        {
+            var ind = this.imgListView.SelectedIndices;
+            foreach (int i in ind)
+            {
+                if (!imgListView.CheckedIndices.Contains(i))
+                {
+                    var item = imgListView.Items[i];
+                    item.Checked = b;
+                }
+            }
         }
     }
 }

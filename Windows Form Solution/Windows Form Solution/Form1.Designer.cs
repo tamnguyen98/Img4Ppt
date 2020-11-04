@@ -43,7 +43,8 @@
             // 
             // TitleInput
             // 
-            this.TitleInput.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.TitleInput.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.TitleInput.Location = new System.Drawing.Point(200, 25);
             this.TitleInput.Name = "TitleInput";
             this.TitleInput.Size = new System.Drawing.Size(409, 20);
@@ -56,34 +57,36 @@
             // 
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
-            this.contextMenuStrip1.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip1_Opening);
             // 
             // BodyText
             // 
-            this.BodyText.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.BodyText.Location = new System.Drawing.Point(200, 105);
+            this.BodyText.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.BodyText.Location = new System.Drawing.Point(200, 91);
             this.BodyText.Name = "BodyText";
             this.BodyText.Size = new System.Drawing.Size(409, 140);
             this.BodyText.TabIndex = 3;
             this.BodyText.Text = "Enter slide\'s body";
             this.BodyText.Enter += new System.EventHandler(this.BodyText_Enter);
             // 
-            // imgList
+            // imgListView
             // 
             this.imgListView.Alignment = System.Windows.Forms.ListViewAlignment.Left;
-            this.imgListView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.imgListView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.imgListView.CheckBoxes = true;
             this.imgListView.HideSelection = false;
             this.imgListView.Location = new System.Drawing.Point(12, 277);
-            this.imgListView.Name = "imgList";
+            this.imgListView.Name = "imgListView";
             this.imgListView.Size = new System.Drawing.Size(776, 121);
             this.imgListView.TabIndex = 4;
             this.imgListView.UseCompatibleStateImageBehavior = false;
+            this.imgListView.SelectedIndexChanged += new System.EventHandler(this.imgListView_SelectedIndexChanged);
+            this.imgListView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.imgListView_MouseDoubleClick);
             // 
             // searchImgButton
             // 
-            this.searchImgButton.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.searchImgButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.searchImgButton.Location = new System.Drawing.Point(12, 248);
             this.searchImgButton.Name = "searchImgButton";
@@ -95,6 +98,8 @@
             // 
             // title
             // 
+            this.title.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.title.AutoSize = true;
             this.title.Location = new System.Drawing.Point(387, 9);
             this.title.Name = "title";
@@ -104,8 +109,10 @@
             // 
             // body
             // 
+            this.body.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.body.AutoSize = true;
-            this.body.Location = new System.Drawing.Point(387, 77);
+            this.body.Location = new System.Drawing.Point(387, 75);
             this.body.Name = "body";
             this.body.Size = new System.Drawing.Size(31, 13);
             this.body.TabIndex = 7;
@@ -119,7 +126,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(197, 248);
+            this.label1.Location = new System.Drawing.Point(197, 234);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(332, 13);
             this.label1.TabIndex = 11;
@@ -140,6 +147,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScroll = true;
+            this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(800, 474);
             this.Controls.Add(this.generate);
             this.Controls.Add(this.label1);
@@ -149,9 +158,11 @@
             this.Controls.Add(this.imgListView);
             this.Controls.Add(this.BodyText);
             this.Controls.Add(this.TitleInput);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "Form1";
-            this.Text = "Tam Nguyen";
+            this.Text = "Img4Ppt";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.Resize += new System.EventHandler(this.Form1_Resize);
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -7,7 +7,7 @@
     <ProjectGuid>{96B2C4EE-16C8-4C7E-A99C-D8DE687E3143}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>Windows_Form_Solution</RootNamespace>
-    <AssemblyName>Windows Form Solution</AssemblyName>
+    <AssemblyName>Img4Ppt</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
