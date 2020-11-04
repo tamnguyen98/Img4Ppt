@@ -256,7 +256,7 @@ namespace Windows_Form_Solution
             //Close the PowerPoint presentation
             powerpointDoc.Close();
 
-            DialogResult res = MessageBox.Show("Result saved as Result.pptx which can be located in bin>debug");
+            DialogResult res = MessageBox.Show("Result saved as Result.pptx");
         }
 
         public Stream ToStream(Image image)
